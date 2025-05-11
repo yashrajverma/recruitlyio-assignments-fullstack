@@ -1,14 +1,4 @@
-const { AzureOpenAI } = require("openai");
-require("dotenv").config();
-
-const endpoint =
-  process.env["AZURE_OPENAI_ENDPOINT"] ||
-  "https://yashv-majbec85-eastus2.openai.azure.com/";
-const apiKey = process.env["AZURE_OPENAI_API_KEY"] || "";
-const apiVersion = "2025-01-01-preview";
-const deployment = process.env["AZURE_OPENAI_MODEL"] || "gpt-4o-mini";
-
-const client = new AzureOpenAI({ endpoint, apiKey, apiVersion, deployment });
+const client = require("../config/ai");
 
 async function generateQuestions(
   candidatePosition,
@@ -17,8 +7,10 @@ async function generateQuestions(
   experienceLevel,
   skills
 ) {
-  const prompt = `Act as an expert Interview Questions Generator for a technical hiring process. Generate ${noOfQuestions} number of questions in JSON format. Your task is to analyze a candidate's profile, parse their resume content, and generate tailored interview questions and coding problems based on their tech domain ${candidatePosition}, skills ${skills}, and experience level ${experienceLevel}.
-  Candidate Resume: ${candidateResume}`;
+  const prompt = `Act as an expert Interview Questions Generator for a technical hiring process. Generate ${noOfQuestions} number of questions in JSON format, including a mix of theoretical questions and practical coding problems if the candidate position is relevant to software domain. Your task is to analyze a candidate's profile, parse their resume content, and generate tailored interview questions and coding problems based on their tech domain ${candidatePosition}, skills ${skills}, and experience level ${experienceLevel}. Theoretical questions should assess the candidate's conceptual knowledge, while coding problems should be practical, relevant to their skills, and include a clear problem statement that can be solved programmatically.
+   Provide the result output in JSON format:
+    {interview_questions:[{"question":"...", code: ""}]}
+    Candidate Resume: ${candidateResume}`;
 
   const result = await client.chat.completions.create({
     messages: [
