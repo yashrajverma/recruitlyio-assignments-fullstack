@@ -11,7 +11,7 @@
 
 ```bash
 git clone <repository-url>
-cd Authenticate9/recruitlyio
+cd recruitlyio
 ```
 
 ### 2. Install Dependencies
@@ -32,8 +32,8 @@ npm install
 
 ### 3. Configure Environment Variables
 
-- **Server**: Update `server/.env` with your Azure OpenAI API key and endpoint.
-- **React App**: Update `recruitlyio/.env` with the backend server URL.
+- **Server**: Add and Update `server/.env` with your Azure OpenAI API key and endpoint.
+- **React App**: Add and Update `recruitlyio/.env` with the backend server URL.
 
 ### 4. Start the Server
 
